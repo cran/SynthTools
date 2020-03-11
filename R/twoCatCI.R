@@ -1,12 +1,12 @@
-#' Confidence intervals and standard errors of multiple imputation for the cross-tabulation of two categorical variables.
+#' Confidence intervals and standard errors for the cross-tabulation of two categorical variables of derived with multiply imputed datasets.
 #'
-#' This function will calculate confidence intervals and standard errors from the proportional tabular responses of multiple imputed datasets for two categorical variables, and also give a YES/NO indicator for whether or not the observed value is within the confidence interval.
-#' The confidence intervals and standard errors are calculated from formulas that are adapted for partially synthetic data sets.  See reference for more information.
+#' This function will calculate confidence intervals and standard errors from the proportional tabular responses of multiply imputed datasets for the cross-tabulation of two categorical variables, and also give a YES/NO indicator for whether or not the observed value is within the confidence interval.
+#' The confidence intervals and standard errors are calculated from formulas that are adapted for fully and partially synthetic data sets.  See reference for more information.
 #'
-#' This function was developed with the intention of making the job of researching partially synthetic data utility a bit easier by providing another way of measuring utility.
+#' This function was developed with the intention of making the job of researching synthetic data utility a bit easier by providing another way of measuring utility.
 #' @param obs_data The original dataset to which the next will be compared, of the type "data.frame".
 #' @param imp_data_list A list composed of \code{m} synthetic data sets.
-#' @param type Specifies which type of datasets are in \code{imp_data_list}.  Options are "synthetic" and "imputed".
+#' @param type Specifies which type of datasets are in \code{imp_data_list}.  Options are "fully" and "partially".
 #' @param vars A vector of the two categorical variable being checked.  Should be of type "factor".
 #' @param sig The number of significant digits in the output dataframes.  Defaults to 4.
 #' @param alpha Test size, defaults to 0.05.
@@ -16,7 +16,7 @@
 #' @return \item{Upper}{Upper limit of the confidence interval}
 #' @return \item{SEs}{Standard Errors}
 #' @return \item{CI_Indicator}{"YES"/"NO" indicating whether or not the observed value is within the confidence interval}
-#' @keywords synthetic synth synds utility multiple imputation
+#' @keywords synthetic synth synds utility multiple imputation partial full
 #' @export
 #' @importFrom Rdpack reprompt
 #' @importFrom magrittr %>% divide_by
@@ -27,7 +27,7 @@
 #' #"sex" and "race" are categorical variables present in the synthesized data sets.
 #' #3 significant digits are desired in the output dataframes.
 #'
-#' twoCatCI(PPA, PPAm5, "synthetic", c("sex", "race"), sig=3)
+#' twoCatCI(PPA, PPAm5, "partially", c("sex", "race"), sig=3)
 
 twoCatCI <- function(obs_data, imp_data_list, type, vars, sig=4, alpha=0.05){
   #Create proportion tables for inference variables
@@ -52,8 +52,8 @@ twoCatCI <- function(obs_data, imp_data_list, type, vars, sig=4, alpha=0.05){
   SE_func <- function(vals_vec) {
     v_bar <- sapply(vals_vec, function(x){x*(1-x)}) %>% sum %>% divide_by(nrow(obs_data))
     B <- var(vals_vec)
-    if(type=="synthetic"){SE <- sqrt(v_bar + B/m)}
-    else if(type=="imputed"){SE <- sqrt((1 + 1/m)*B)}
+    if(type=="partially"){SE <- sqrt(v_bar + B/m)}
+    else if(type=="fully"){SE <- sqrt((1 + 1/m)*B - v_bar)}
     list(v_bar=v_bar, B=B, SE=SE)
   }
 
@@ -67,7 +67,9 @@ twoCatCI <- function(obs_data, imp_data_list, type, vars, sig=4, alpha=0.05){
       B <- se_output$B
       SE <- se_output$SE
       se_mat[i,j] <- SE
-      df <- (m-1) * (1+v_bar/ ((1 + 1/m)*B))^2
+
+      if(type=="partially"){df <- (m-1) * (1+v_bar / (B/m))^2}
+      else if(type=="fully"){df <- (m-1) * (1-v_bar/((1 + 1/m)*B))^2}
 
       p_bar <- mean(vals)
       lower_mat[i,j] <- lower <- p_bar - qt(1 - alpha/2, df=df)*se_mat[i,j]

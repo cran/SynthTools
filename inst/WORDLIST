@@ -3,6 +3,8 @@ AGEP
 doi
 Lifecycle
 MSP
+oneCatCI
+pertRates
 PPA
 PPAps
 PUMS
@@ -11,4 +13,6 @@ Raghunathan
 recode
 recoded
 Reiter
+stringsAsFactors
+twoCatCI
 VPS

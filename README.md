@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/SynthTools)](https://cran.r-project.org/package=SynthTools)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
 The goal of SynthTools is to make measuring the utility of partially synthetic and multiple imputed data sets easier.  SynthTools includes functions that check to make sure original and derived data sets have comparable attributes, compute overall and variable-specific perturbation rates, and compute standard errors and confidence intervals for continuous and categorical variables.

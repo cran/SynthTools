@@ -11,7 +11,7 @@ pertRates(obs_data, new_data, imp_vars, desc = FALSE, sig = 4)
 
 \item{new_data}{The fully or partially synthetic data set to be compared to the observed data, of the type "data.frame".}
 
-\item{imp_vars}{A vector of variables which were imputed and are to be used in the overall perturbation rate calculation.}
+\item{imp_vars}{The variable or a vector of variables which were imputed and are to be used in the overall perturbation rate calculation.}
 
 \item{desc}{Whether or not the variable perturbation rates should be output in descending rate order.  Defaults to FALSE.}
 

@@ -1,7 +1,7 @@
 Package: SynthTools
 Title: Tools and Tests for Experiments with Partially Synthetic Data
         Sets
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     person(given = "Charlotte",
            family = "Looby",
@@ -11,15 +11,15 @@ Description: A set of functions to support experimentation in the utility of par
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1.9000
+RoxygenNote: 7.0.2
 Depends: R (>= 2.10)
 Imports: dplyr, magrittr, Rdpack, utils
 Suggests: synthpop, testthat (>= 2.1.0), spelling
 RdMacros: Rdpack
 Language: en-US
 NeedsCompilation: no
-Packaged: 2019-09-03 18:47:50 UTC; clooby
+Packaged: 2020-03-11 12:46:14 UTC; clooby
 Author: Charlotte Looby [aut, cre]
 Maintainer: Charlotte Looby <clooby@rti.org>
 Repository: CRAN
-Date/Publication: 2019-09-04 13:40:08 UTC
+Date/Publication: 2020-03-11 13:00:02 UTC

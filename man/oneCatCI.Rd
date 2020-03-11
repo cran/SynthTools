@@ -2,7 +2,7 @@
 % Please edit documentation in R/oneCatCI.R
 \name{oneCatCI}
 \alias{oneCatCI}
-\title{Confidence intervals and standard errors of multiple imputation for a specific imputed categorical variable.}
+\title{Confidence intervals and standard errors for one synthetic categorical variable of derived with multiply imputed datasets.}
 \usage{
 oneCatCI(obs_data, imp_data_list, type, var, sig = 6, alpha = 0.05)
 }
@@ -11,7 +11,7 @@ oneCatCI(obs_data, imp_data_list, type, var, sig = 6, alpha = 0.05)
 
 \item{imp_data_list}{A list of datasets that are either synthetic or contain imputed values.}
 
-\item{type}{Specifies which type of datasets are in \code{imp_data_list}.  Options are "synthetic" and "imputed".}
+\item{type}{Specifies which type of datasets are in \code{imp_data_list}.  Options are "fully" and "partially".}
 
 \item{var}{The categorical variable being checked.  Should be of type "factor".}
 
@@ -23,23 +23,26 @@ oneCatCI(obs_data, imp_data_list, type, var, sig = 6, alpha = 0.05)
 This function returns a dataframe with the variable's responses, observed values, lower and upper limits of the confidence interval, standard error, and "YES"/"NO" indicating whether or not the observed value is within the confidence interval.
 }
 \description{
-This function will calculate confidence intervals and standard errors from the proportional responses of multiple imputed datasets for a specified categorical variable, and also gives a YES/NO indicator for whether or not the observed value is within the confidence interval.
-The confidence intervals and standard errors are calculated from variance formulas that are specific to whether the multiple imputed datasets are synthetic or imputed.  See reference for more information.
+This function will calculate confidence intervals and standard errors from the proportional responses of multiply imputed datasets for a specified categorical variable, and also gives a YES/NO indicator for whether or not the observed value is within the confidence interval.
+The confidence intervals and standard errors are calculated from variance formulas that are specific to whether the multiple imputed datasets are fully or partially synthetic.  See reference for more information.
 }
 \details{
-This function was developed with the intention of making the job of researching imputed and synthetic data utility a bit easier by providing another way of measuring utility.
+This function was developed with the intention of making the job of researching synthetic data utility a bit easier by providing another way of measuring utility.
 }
 \examples{
 #PPA is observed data set, PPAm5 is a list of 5 partially synthetic data sets derived from PPA.
 #sex is a categorical variable within these data sets. 3 significant digits are desired.
 
-oneCatCI(obs_data=PPA, imp_data_list=PPAm5, type="synthetic", var="sex", sig=3)
+oneCatCI(obs_data=PPA, imp_data_list=PPAm5, type="partially", var="sex", sig=3)
 }
 \references{
 \insertRef{adapt}{SynthTools}
 }
+\keyword{fully}
 \keyword{imputation}
 \keyword{multiple}
+\keyword{multiply}
+\keyword{partial}
 \keyword{synds}
 \keyword{synth}
 \keyword{synthetic}

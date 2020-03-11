@@ -45,16 +45,16 @@ logicCheck <- function(obs_data, new_data, vars, NAopt=T){
   }
   which_cells <- I(t1==0) - I(t2==0)
   comp <- sum(which_cells)
-  if(comp==0){cat(paste(vars[1], "and", vars[2], "OK"), fill=2)
-    paste("Observed data:") %>% cat(fill=2); t1 %>% print
-    paste("New data:") %>% cat(fill=2); t2 %>% print
+  if(comp==0){print(paste(vars[1], "and", vars[2], "OK"))
+    paste("Observed data:") %>% print; t1 %>% print
+    paste("New data:") %>% print; t2 %>% print
     consist=TRUE}
   else{
-    paste("logicCheck found potential logical inconsistencies in the following places:") %>% cat(fill=2)
-    paste(vars[1], "x", vars[2], ":") %>% cat(fill=2)
+    paste("logicCheck found potential logical inconsistencies in the following places:") %>% message
+    paste(vars[1], "x", vars[2], ":") %>% message
     which_cells %>% print
-    paste("Observed data:") %>% cat(fill=2); t1 %>% print
-    paste("New data:") %>% cat(fill=2); t2 %>% print
+    paste("Observed data:") %>% print; t1 %>% print
+    paste("New data:") %>% print; t2 %>% print
     consist=FALSE}
   list(consistent=consist, obs.table=t1, new.table=t2, which=which_cells)
 }

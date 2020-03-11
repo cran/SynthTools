@@ -28,19 +28,19 @@ dataComp <- function(obs_data, new_data){
     same_dim=FALSE; same_order=NA; class_identical=NA; cnd=NA; fac_num_same=NA; fac_lev_same=NA
     paste("STOP:  data sets are different dimensions.",
           paste0("Observed data: ", dim(obs_data)[1], " rows, ", dim(obs_data)[2], " columns"),
-          paste0("Synthesized data: ", dim(new_data)[1], " rows, ", dim(new_data)[2], " columns"), sep="\n") %>% cat(fill=2)
+          paste0("Synthesized data: ", dim(new_data)[1], " rows, ", dim(new_data)[2], " columns"), sep="\n") %>% message
   }
   else{same_dim=TRUE
-    "Observed and synthesized data sets have the same dimensions:  YES" %>% cat(fill=2)
+    "Observed and synthesized data sets have the same dimensions:  YES" %>% print
 
     #Check for same variable order
     if(mean(names(obs_data)==names(new_data))!=1){
       same_order=FALSE
       class_identical=NA; cnd=NA; fac_num_same=NA; fac_lev_same=NA
-      paste("STOP: Variables are NOT in the same order. Reorder variables and try again.") %>% cat(fill=2)
+      paste("STOP: Variables are NOT in the same order. Reorder variables and try again.") %>% message
     }
     else{same_order=TRUE
-        "Variable order the same:  YES" %>% cat(fill=2)
+        "Variable order the same:  YES" %>% print
 
       #Check correct classifications
       class_obs <- rep(NA, length(obs_data))
@@ -49,21 +49,21 @@ dataComp <- function(obs_data, new_data){
       for(i in 1:length(new_data)){class_new_data[i] <- class(new_data[[i]])}
 
       if(mean(class_obs == class_new_data)!=1){
-        "Variable classification identical:  NO" %>% cat(fill=2)
-        classes <- data.frame(names(obs_data), class_obs, class_new_data)
+        "Variable classification identical:  NO" %>% message
+        classes <- data.frame(names(obs_data), class_obs, class_new_data, stringsAsFactors = FALSE)
         diff_class <- classes[class_obs != class_new_data,]
         names(diff_class) <- c("Variable: ", "Observed class: ", "New class: ")
         diff_class %>% print
-        paste("STOP: Correct variable classifications and try again.") %>% cat(fill=2)
+        paste("STOP: Correct variable classifications and try again.") %>% message
         class_identical=FALSE
         cnd=NA; fac_num_same=NA; fac_lev_same=NA
       }
       else{
         class_identical=TRUE
-        "Variable classification identical:  YES" %>% cat(fill=2)
+        "Variable classification identical:  YES" %>% print
         cnd <- table(class_new_data)
         for(i in 1:length(cnd)){
-          paste0(names(cnd)[i], " variables: ", cnd[i]) %>% cat(fill=2)
+          paste0(names(cnd)[i], " variables: ", cnd[i]) %>% print
         }
         #Check number of factor levels
         faclen_obs <- length(obs_data[class_obs=="factor"])
@@ -71,8 +71,8 @@ dataComp <- function(obs_data, new_data){
 
         if(faclen_obs==0 | faclen_new_data==0){
           fac_num_same=NA; fac_lev_same=NA
-          paste("WARNING: There are no variables of the factor classification to check for",
-                "proper factor levels. Recommend changing categorical variables to factors.", sep="\n") %>% cat(fill=2)
+          paste("There are no variables of the factor classification to check for",
+                "proper factor levels. Recommend changing categorical variables to factors.", sep="\n") %>% warning
         }
         else{level_obs <- rep(NA, faclen_obs)
         level_new_data <- rep(NA, faclen_new_data)
@@ -92,12 +92,12 @@ dataComp <- function(obs_data, new_data){
 
         if(meanlevel!=1){
           fac_num_same=FALSE; fac_lev_same=NA
-          "Number of factor levels are the same:  NO" %>% cat(fill=2)
+          "Number of factor levels are the same:  NO" %>% message
           difflev <- which(level_obs != level_new_data)
-          paste("Factor with different levels:", (facs_obs)[difflev]) %>% cat(fill=2)
+          paste("Factor with different levels:", (facs_obs)[difflev]) %>% print
         }
         else{fac_num_same=TRUE
-        "Number of factor levels are the same:  YES" %>% cat(fill=2)
+        "Number of factor levels are the same:  YES" %>% print
 
         #Check that all levels are the same
         levelsame <- rep(0, length(faclen_obs))
@@ -106,13 +106,13 @@ dataComp <- function(obs_data, new_data){
         }
         if(mean(levelsame)!=1){
           fac_lev_same=FALSE
-          "All factor levels are identical:  NO" %>% cat(fill=2)
+          "All factor levels are identical:  NO" %>% message
           diff_levels <- which(levelsame != 1)
           diff_names <- names(obs_data[class_obs=="factor"])[diff_levels] %>% as.vector
-          for(i in 1:length(diff_names)){paste0("Factor with different levels: ", diff_names[i]) %>% cat(fill=2)}
+          for(i in 1:length(diff_names)){paste0("Factor with different levels: ", diff_names[i]) %>% message}
         }
         else{fac_lev_same=TRUE
-        "All factor levels are identical:  YES" %>% cat(fill=2)
+        "All factor levels are identical:  YES" %>% print
         }
 
         }

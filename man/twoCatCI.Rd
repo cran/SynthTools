@@ -2,7 +2,7 @@
 % Please edit documentation in R/twoCatCI.R
 \name{twoCatCI}
 \alias{twoCatCI}
-\title{Confidence intervals and standard errors of multiple imputation for the cross-tabulation of two categorical variables.}
+\title{Confidence intervals and standard errors for the cross-tabulation of two categorical variables of derived with multiply imputed datasets.}
 \usage{
 twoCatCI(obs_data, imp_data_list, type, vars, sig = 4, alpha = 0.05)
 }
@@ -11,7 +11,7 @@ twoCatCI(obs_data, imp_data_list, type, vars, sig = 4, alpha = 0.05)
 
 \item{imp_data_list}{A list composed of \code{m} synthetic data sets.}
 
-\item{type}{Specifies which type of datasets are in \code{imp_data_list}.  Options are "synthetic" and "imputed".}
+\item{type}{Specifies which type of datasets are in \code{imp_data_list}.  Options are "fully" and "partially".}
 
 \item{vars}{A vector of the two categorical variable being checked.  Should be of type "factor".}
 
@@ -33,24 +33,26 @@ This function returns a list of five data frames:
 \item{CI_Indicator}{"YES"/"NO" indicating whether or not the observed value is within the confidence interval}
 }
 \description{
-This function will calculate confidence intervals and standard errors from the proportional tabular responses of multiple imputed datasets for two categorical variables, and also give a YES/NO indicator for whether or not the observed value is within the confidence interval.
-The confidence intervals and standard errors are calculated from formulas that are adapted for partially synthetic data sets.  See reference for more information.
+This function will calculate confidence intervals and standard errors from the proportional tabular responses of multiply imputed datasets for the cross-tabulation of two categorical variables, and also give a YES/NO indicator for whether or not the observed value is within the confidence interval.
+The confidence intervals and standard errors are calculated from formulas that are adapted for fully and partially synthetic data sets.  See reference for more information.
 }
 \details{
-This function was developed with the intention of making the job of researching partially synthetic data utility a bit easier by providing another way of measuring utility.
+This function was developed with the intention of making the job of researching synthetic data utility a bit easier by providing another way of measuring utility.
 }
 \examples{
 #PPA is the observed data set.  PPAm5 is a list of 5 partially synthetic data sets derived from PPA.
 #"sex" and "race" are categorical variables present in the synthesized data sets.
 #3 significant digits are desired in the output dataframes.
 
-twoCatCI(PPA, PPAm5, "synthetic", c("sex", "race"), sig=3)
+twoCatCI(PPA, PPAm5, "partially", c("sex", "race"), sig=3)
 }
 \references{
 \insertRef{adapt}{SynthTools}
 }
+\keyword{full}
 \keyword{imputation}
 \keyword{multiple}
+\keyword{partial}
 \keyword{synds}
 \keyword{synth}
 \keyword{synthetic}
